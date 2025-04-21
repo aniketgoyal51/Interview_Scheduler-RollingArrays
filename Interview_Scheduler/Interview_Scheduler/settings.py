@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-cmeuppyh@d0e&%avi-!l8$6l+%t4j!$oeqyek1vjx*yo%@jut%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [Interview_Scheduler-RollingArrays]
 
 
 # Application definition
