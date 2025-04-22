@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'templates/dashboard.html' %}
+    <button>
+        <a href='{% url "add_slot" %}'>add slot</a>
+    </button>
+    {% for slot in interviews_slots%}
+    <div>
+        <h1>Interviewer Name : {{slot.interviewer_name}}</h1>
+        <h3>Date : {{slot.date}}</h3>
+        <h3>Time : {{slot.time}}</h3>
+        <h3>Job Role : {{slot.job_role}}</h3>
+        <h3>Status : {{slot.status}}</h3>
+    </div>
+    {%endfor%}
+</body>
+</html>

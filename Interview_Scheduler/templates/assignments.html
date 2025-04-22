@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'templates/dashboard.html' %}
+    <button>
+        <a href='{% url "add_assignment" %}'>add assignment</a>
+    </button>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Applicant Name</th>
+                <th>Interview Date</th>
+                <th>Interview Time</th>
+                <th>Interviewer Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for assignment in assignments %}
+            <tr>
+                <td>{{ assignment.id }}</td>
+                <td>{{ assignment.applicant.name }}</td>
+                <td>{{ assignment.interview_slot.date }}</td>
+                <td>{{ assignment.interview_slot.time }}</td>
+                <td>{{ assignment.interview_slot.interviewer_name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
