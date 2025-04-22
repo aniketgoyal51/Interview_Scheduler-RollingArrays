@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'templates/dashboard.html' %}
+    <button>
+        <a href='{% url "add_applicant" %}'>add applicant</a>
+    </button>
+    {% for applicant in applicants%}
+    <div>
+        <h1>Name : {{applicant.name}}</h1>
+        <h3>Email : {{applicant.email}}</h3>
+        <h3>Job Applied For : {{applicant.job_applied_for}}</h3>
+    </div>
+    {%endfor%}
+</body>
+</html>
