@@ -6,8 +6,37 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>
-        add_assignment
-    </h1>
+    <h1>Assign Applicant to Interview Slot</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label for="applicant">Select Applicant:</label><br>
+    <select name="applicant" id="applicant" required>
+        <option value="Select" selected>Select </option>
+        {% for applicant in applicants %}
+            <option value="{{ applicant.id }}">{{ applicant.name }} - {{ applicant.job_applied_for }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label for="interview_slot">Select Interview Slot:</label><br>
+    <select name="interview_slot" id="interview_slot" required>
+        (% if slots %)
+        
+            {% for slot in slots %}
+                {% if slot.status == "available" %}
+                    <option value="{{ slot.id }}">
+                        {{ slot.date }} {{ slot.time }} with {{ slot.interviewer_name }} ({{ slot.status }})
+                    </option>
+                {% endif %} 
+            {% endfor %}
+        (% else %)
+            <option value=""> No Available Slots</option>
+        {% endif %}
+    </select><br><br>
+
+    <button type="submit">Assign</button>
+</form>
+
 </body>
 </html>
