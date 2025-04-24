@@ -1,13 +1,16 @@
+{% load static tailwind_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    {% tailwind_css %}
 </head>
 <body>
-    {% include 'templates/dashboard.html' %}
-    <button>
+    {% include 'templates/navbar.html' %}
+    <button class="border border-black px-2 py-1 rounded">
         <a href='{% url "add_assignment" %}'>add assignment</a>
     </button>
     <table border="1">
@@ -28,6 +31,14 @@
                 <td>{{ assignment.interview_slot.date }}</td>
                 <td>{{ assignment.interview_slot.time }}</td>
                 <td>{{ assignment.interview_slot.interviewer_name }}</td>
+                <td>
+                    <form method="POST" action="{% url 'update_slot' assignment.interview_slot.id%}">
+                        {% csrf_token %}
+                        <button type="submit" class="border border-black px-2 py-1 rounded">
+                            Mark as done
+                        </button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

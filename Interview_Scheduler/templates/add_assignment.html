@@ -1,9 +1,12 @@
+{% load static tailwind_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    {% tailwind_css %}
 </head>
 <body>
     <h1>Assign Applicant to Interview Slot</h1>
@@ -12,7 +15,7 @@
     {% csrf_token %}
 
     <label for="applicant">Select Applicant:</label><br>
-    <select name="applicant" id="applicant" required>
+    <select name="applicant" id="applicant" required class="border border-black px-2 py-1 rounded">
         <option value="Select" selected>Select </option>
         {% for applicant in applicants %}
             <option value="{{ applicant.id }}">{{ applicant.name }} - {{ applicant.job_applied_for }}</option>
@@ -20,7 +23,8 @@
     </select><br><br>
 
     <label for="interview_slot">Select Interview Slot:</label><br>
-    <select name="interview_slot" id="interview_slot" required>
+    <select name="interview_slot" id="interview_slot" required class="border border-black px-2 py-1 rounded">
+
         {% if slots %}
         
             {% for slot in slots %}
