@@ -9,4 +9,5 @@ urlpatterns=[
     path('add_slot',views.add_slot,name='add_slot'),
     path('assignments',views.assignments,name='assignments'),
     path('add_assignment',views.add_assignment,name='add_assignment'),
+    path('update_slot/<int:slot_id>/',views.update_slot,name='update_slot')
 ]

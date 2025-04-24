@@ -1,9 +1,12 @@
+{% load static tailwind_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    {% tailwind_css %}
 </head>
 <body>
     <h1>Add Interview Slot</h1>
@@ -12,26 +15,28 @@
     {% csrf_token %}
     
     <label for="date">Date:</label><br>
-    <input type="date" id="date" name="date" required><br><br>
+    <input class="border border-black px-2 py-1 rounded" type="date" id="date" name="date" required><br><br>
 
     <label for="time">Time:</label><br>
-    <input type="time" id="time" name="time" required><br><br>
+    <input class="border border-black px-2 py-1 rounded" type="time" id="time" name="time" required><br><br>
 
     <label for="interviewer_name">Interviewer Name:</label><br>
-    <input type="text" id="interviewer_name" name="interviewer_name" required><br><br>
+    <input class="border border-black px-2 py-1 rounded" type="text" id="interviewer_name" name="interviewer_name" required><br><br>
 
     <label for="job_role">Job Role:</label><br>
-    <input type="text" id="job_role" name="job_role" required><br><br>
+    <input class="border border-black px-2 py-1 rounded" type="text" id="job_role" name="job_role" required><br><br>
 
     <label for="status">Status:</label><br>
-    <select id="status" name="status" required>
+    <select id="status" name="status" required class="border border-black px-2 py-1 rounded">
         <option value="available">Available</option>
         <option value="scheduled">Scheduled</option>
         <option value="completed">Completed</option>
         <option value="cancelled">Cancelled</option>
     </select><br><br>
 
-    <button type="submit">Submit</button>
+    <button type="submit" class="border border-black px-2 py-1 rounded">
+        Submit
+    </button>
 </form>
 
 </body>

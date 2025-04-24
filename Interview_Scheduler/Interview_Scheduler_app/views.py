@@ -61,3 +61,11 @@ def add_assignment(request):
         "applicants": applicants,
         "slots": slots,
     })
+
+
+def update_slot(request,slot_id):
+    slot=InterviewSlot.objects.get(id=slot_id)
+    if slot.status=='scheduled':
+        slot.status="completed"
+        slot.save()
+    return redirect("assignments")

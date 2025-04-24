@@ -1,14 +1,21 @@
+{% load static tailwind_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    {% tailwind_css %}
 </head>
 <body>
-    {% include 'templates/dashboard.html' %}
-    <button>
-        <a href='{% url "add_applicant" %}'>add applicant</a>
+    <div>
+        {% include 'templates/navbar.html' %}
+    </div>
+    <button class="border border-black px-2 py-1 rounded">
+        <a href="{% url 'add_applicant' %}">
+            add Application
+        </a>
     </button>
     {% for applicant in applicants%}
     <div>
