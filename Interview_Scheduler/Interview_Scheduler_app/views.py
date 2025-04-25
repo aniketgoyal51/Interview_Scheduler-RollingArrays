@@ -1,10 +1,43 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import Assignment,Applicant,InterviewSlot
 
 # Create your views here.
 def dashboard(request):
+    total_applicants = Applicant.objects.count()
+    total_slots = InterviewSlot.objects.count()
+    scheduled_interviews = InterviewSlot.objects.filter(status='scheduled').count()
+    completed_interviews = InterviewSlot.objects.filter(status='completed').count()
+    available_interviews = InterviewSlot.objects.filter(status='available').count()
 
-    return render(request,"dashboard.html")
+    recent_assignments = Assignment.objects.select_related('applicant', 'interview_slot').order_by('-id')[:5]
+
+    assignment_data = []
+    for assignment in recent_assignments:
+        slot = assignment.interview_slot
+        if slot.status == 'completed':
+            status_class = 'bg-green-200 text-green-800'
+        elif slot.status == 'scheduled':
+            status_class = 'bg-yellow-200 text-yellow-800'
+        else:
+            status_class = 'bg-blue-200 text-blue-800'
+        
+        assignment_data.append({
+            'applicant_name': assignment.applicant.name,
+            'interviewer_name': assignment.interview_slot.interviewer_name,
+            'slot': f"{slot.date}, {slot.time}",
+            'status': slot.status.capitalize(),
+            'status_class': status_class,
+        })
+    context = {
+        'total_applicants': total_applicants,
+        'total_slots': total_slots,
+        'scheduled_interviews': scheduled_interviews,
+        'completed_interviews': completed_interviews,
+        'recent_assignments': assignment_data,
+        'available_interviews':available_interviews
+    }
+    print(context)
+    return render(request, 'dashboard.html', context)
 
 def applicants(request):
     applicants=Applicant.objects.all()
@@ -69,3 +102,27 @@ def update_slot(request,slot_id):
         slot.status="completed"
         slot.save()
     return redirect("assignments")
+
+def cancel_slot(request, slot_id):
+    if request.method == 'POST':
+        slot = get_object_or_404(InterviewSlot, id=slot_id)
+        slot.status = 'cancelled'
+        slot.save()
+    return redirect('slots') 
+
+def filter_date(request):
+    date = request.GET.get('date')
+    if date:
+        assignments = Assignment.objects.filter(interview_slot__date=date)
+    else:
+        assignments = Assignment.objects.all()
+    return render(request, 'assignments.html', {'assignments': assignments})
+
+
+def filtur_status(request):
+    filter_status = request.GET.get('status')
+    if filter_status:
+        slots = InterviewSlot.objects.filter(status=filter_status)
+    else:
+        slots = InterviewSlot.objects.all()
+    return render(request, 'slots.html', {'interviews_slots': slots})

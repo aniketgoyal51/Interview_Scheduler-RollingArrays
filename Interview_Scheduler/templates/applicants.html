@@ -5,24 +5,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Applicants</title>
     {% tailwind_css %}
 </head>
-<body>
-    <div>
+<body class="bg-gray-100 min-h-screen">
+
+    <div class="mb-4">
         {% include 'templates/navbar.html' %}
     </div>
-    <button class="border border-black px-2 py-1 rounded">
-        <a href="{% url 'add_applicant' %}">
-            add Application
-        </a>
-    </button>
-    {% for applicant in applicants%}
-    <div>
-        <h1>Name : {{applicant.name}}</h1>
-        <h3>Email : {{applicant.email}}</h3>
-        <h3>Job Applied For : {{applicant.job_applied_for}}</h3>
+
+    <div class="max-w-4xl mx-auto px-4 py-6">
+        <div class="flex justify-end mb-6">
+            <a href="{% url 'add_applicant' %}" 
+               class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                + Add Application
+            </a>
+        </div>
+
+        <div class="space-y-6">
+            {% for applicant in applicants %}
+            <div class="bg-white shadow rounded-lg p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Name: {{ applicant.name }}</h2>
+                <p class="text-gray-700"><strong>Email:</strong> {{ applicant.email }}</p>
+                <p class="text-gray-700"><strong>Job Applied For:</strong> {{ applicant.job_applied_for }}</p>
+            </div>
+            {% empty %}
+            <p class="text-center text-gray-500">No applicants found.</p>
+            {% endfor %}
+        </div>
     </div>
-    {%endfor%}
+
 </body>
 </html>
