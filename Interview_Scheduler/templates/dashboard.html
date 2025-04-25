@@ -3,14 +3,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dashboard</title>
-  {% tailwind_css %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    {% tailwind_css %}
 </head>
-<body >
+<body class="bg-gray-100 p-6 font-sans">
     {% include 'templates/navbar.html' %}
 
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6 text-center">📊 Dashboard Overview</h1>
 
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-5 gap-2 mb-10">
+            <div class="bg-white shadow rounded-xl p-5">
+                <h2 class="text-sm text-gray-500">Total Applicants</h2>
+                <p class="text-2xl font-semibold text-blue-600">{{ total_applicants }}</p>
+            </div>
+            <div class="bg-white shadow rounded-xl p-5">
+                <h2 class="text-sm text-gray-500">Total Interview Slots</h2>
+                <p class="text-2xl font-semibold text-indigo-600">{{ total_slots }}</p>
+            </div>
+            <div class="bg-white shadow rounded-xl p-5">
+                <h2 class="text-sm text-gray-500">Scheduled Interviews</h2>
+                <p class="text-2xl font-semibold text-yellow-600">{{ scheduled_interviews }}</p>
+            </div>
+            <div class="bg-white shadow rounded-xl p-5">
+                <h2 class="text-sm text-gray-500">Completed Interviews</h2>
+                <p class="text-2xl font-semibold text-green-600">{{ completed_interviews }}</p>
+            </div>
+            <div class="bg-white shadow rounded-xl p-5">
+                <h2 class="text-sm text-gray-500">Available Interviews</h2>
+                <p class="text-2xl font-semibold text-green-600">{{ available_interviews }}</p>
+            </div>
+        </div>
+
+        <!-- Recent Assignments -->
+        <div class="bg-white shadow rounded-xl p-6">
+            <h2 class="text-xl font-semibold mb-4">🕑 Recent Assignments</h2>
+            {% if recent_assignments %}
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto">
+                        <thead>
+                            <tr class="bg-gray-200 text-left text-sm">
+                                <th class="px-4 py-2">Interviewer</th>
+                                <th class="px-4 py-2">Applicant</th>
+                                <th class="px-4 py-2">Slot</th>
+                                <th class="px-4 py-2">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in recent_assignments %}
+                            <tr class="border-b">
+                                <td class="px-4 py-2">{{ item.interviewer_name }}</td>
+                                <td class="px-4 py-2">{{ item.applicant_name }}</td>
+                                <td class="px-4 py-2">{{ item.slot }}</td>
+                                <td class="px-4 py-2">
+                                    <span class="px-2 py-1 rounded text-xs font-medium {{ item.status_class }}">
+                                        {{ item.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-gray-500">No recent assignments available.</p>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>

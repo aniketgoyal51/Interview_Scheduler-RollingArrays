@@ -5,42 +5,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Assign Applicant</title>
     {% tailwind_css %}
 </head>
-<body>
-    <h1>Assign Applicant to Interview Slot</h1>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
-<form method="POST">
-    {% csrf_token %}
+    <div class="bg-white p-8 rounded-2xl shadow-md w-full max-w-xl">
+        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Assign Applicant to Interview Slot</h1>
 
-    <label for="applicant">Select Applicant:</label><br>
-    <select name="applicant" id="applicant" required class="border border-black px-2 py-1 rounded">
-        <option value="Select" selected>Select </option>
-        {% for applicant in applicants %}
-            <option value="{{ applicant.id }}">{{ applicant.name }} - {{ applicant.job_applied_for }}</option>
-        {% endfor %}
-    </select><br><br>
+        <form method="POST" class="space-y-5">
+            {% csrf_token %}
 
-    <label for="interview_slot">Select Interview Slot:</label><br>
-    <select name="interview_slot" id="interview_slot" required class="border border-black px-2 py-1 rounded">
+            <!-- Applicant Dropdown -->
+            <div>
+                <label for="applicant" class="block text-sm font-medium text-gray-700 mb-1">Select Applicant</label>
+                <select name="applicant" id="applicant" required
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <option value="Select" selected>Select</option>
+                    {% for applicant in applicants %}
+                        <option value="{{ applicant.id }}">{{ applicant.name }} - {{ applicant.job_applied_for }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-        {% if slots %}
-        
-            {% for slot in slots %}
-                {% if slot.status == "available" %}
-                    <option value="{{ slot.id }}">
-                        {{ slot.date }} {{ slot.time }} with {{ slot.interviewer_name }} ({{ slot.status }})
-                    </option>
-                {% endif %} 
-            {% endfor %}
-        {% else %}
-            <option value=""> No Available Slots</option>
-        {% endif %}
-    </select><br><br>
 
-    <button type="submit">Assign</button>
-</form>
+            <!-- Slot Dropdown -->
+            <div>
+                <label for="interview_slot" class="block text-sm font-medium text-gray-700 mb-1">Select Interview Slot</label>
+                <select name="interview_slot" id="interview_slot" required
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    {% if slots %}
+                        {% for slot in slots %}
+                            {% if slot.status == "available" %}
+                                <option value="{{ slot.id }}">
+                                    {{ slot.date }} {{ slot.time }} with {{ slot.interviewer_name }} ({{ slot.status }})
+                                </option>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <option value="">No Available Slots</option>
+                    {% endif %}
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                    class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
+                Assign
+            </button>
+        </form>
+    </div>
 
 </body>
 </html>
