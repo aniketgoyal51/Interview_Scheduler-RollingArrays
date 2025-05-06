@@ -19,7 +19,7 @@ def dashboard(request):
         elif slot.status == 'scheduled':
             status_class = 'bg-yellow-200 text-yellow-800'
         else:
-            status_class = 'bg-blue-200 text-blue-800'
+            status_class = 'bg-red-200 text-red-800'
         
         assignment_data.append({
             'applicant_name': assignment.applicant.name,
