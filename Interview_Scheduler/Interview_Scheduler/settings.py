@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-cmeuppyh@d0e&%avi-!l8$6l+%t4j!$oeqyek1vjx*yo%@jut%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://interview-scheduler-rollingarrays.onrender.com", 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ["interview-scheduler-rollingarrays.onrender.com", 'localhost', '127.0.0.1']
 
 
 # Application definition
